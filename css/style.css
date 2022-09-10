@@ -43,7 +43,7 @@ header{
 header span{
     margin: 16px 12px 0 12px;
     font-family: sans-serif;
-    font-size: 3em;
+    font-size: 1.4em;
     font-weight: bold;
     pointer-events: none;
 }
