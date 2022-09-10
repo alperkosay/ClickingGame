@@ -65,28 +65,7 @@ startRemoveRandom();
 
 
 $(function () {
-    $('.container').on('mouseover', '.circle',function(){
-        
-        let parentValue = $(this);
-
-        $(window).bind('keydown',function (e) {
-            var originator = e.keyCode || e.which;
-            if (originator == '90' || originator == '88') {
-                parentValue.animate({
-                    'width': '90px',
-                    'height': '90px'
-                },100, function () {
-                    parentValue.remove();
-                });
-                score+=10;
-                time+=10;
-                $('.time').val(time);
-                $('.score').html(score);
-            }
-        })
-    }).on('mouseout',function () {
-        $(window).unbind('keydown');
-    }).on('click', '.circle', function () {
+    $('.container').on('click', '.circle', function () {
         $(this).animate({
             'width': '90px',
             'height': '90px'
