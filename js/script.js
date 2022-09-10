@@ -1,5 +1,5 @@
 let score = 0;
-let time = 10;
+let time = 100;
 let circle;
 let timeSpeed = 900;
 let circleSpeed = 900;
@@ -17,8 +17,8 @@ let colors = [
 // Süre geri sayım
 setInterval(() => {
     if (time > 0) {
-        time--;
-        $('.time').html(time);
+        time-=10;
+        $('.time').val(time);
     } else if (time == 0 ) {
         $('.lose').show();
     }
@@ -50,8 +50,8 @@ $(function () {
             $(this).remove();
         });
         score+=10;
-        time++;
-        $('.time').html(time);
+        time+=10;
+        $('.time').val(time);
         $('.score').html(score);
         clickSound.play();
     });
