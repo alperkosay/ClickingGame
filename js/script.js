@@ -3,6 +3,7 @@ let time = 100;
 let circle;
 let timeSpeed = 900;
 let circleSpeed = 900;
+let removeSpeed = 900;
 var clickSound = new Audio('../sound/hit-sound.mp3');
 let randomNumber = (max) =>{
     return Math.floor(Math.random()* max)
@@ -15,34 +16,77 @@ let colors = [
 ];
 
 // Süre geri sayım
-setInterval(() => {
-    if (time > 0) {
-        time-=10;
-        $('.time').val(time);
-    } else if (time == 0 ) {
-        $('.lose').show();
-    }
-}, timeSpeed);
+function startTimer() {
+    setTimeout(() => {
+        if (time > 0) {
+            time-=10;
+            $('.time').val(time);
+        } else if (time == 0 ) {
+            $('.lose').show();
+        }
+        timeSpeed -= 10;
+        startTimer();
+    }, timeSpeed);
+}
+
+startTimer();
 
 // Random Circle
-setInterval(() => {
-    $('.container').append('<div class="circle" style="left: '+randomNumber(75)+'%; top: '+randomNumber(80)+'%; background-color: '+colors[randomNumber(3)]+'"></div>');
-    circle = [document.querySelectorAll('.circle')];
-}, circleSpeed );
+function startGenerateRandom() {
+    setTimeout(() => {
+        $('.container').append('<div class="circle" style="left: '+randomNumber(75)+'%; top: '+randomNumber(80)+'%; background-color: '+colors[randomNumber(3)]+'"></div>');
+        circle = [document.querySelectorAll('.circle')];
+        if (circleSpeed > 300) {
+            circleSpeed -= 10;
+            console.log(circleSpeed)
+        }
+        startGenerateRandom();
+    }, circleSpeed );
+}
 
+startGenerateRandom();
 
 // önceki oluşturulmuş daireleri sil
-setInterval(() => {
-    circle.forEach((element) => {
-        if (element.length > 3) {
-            $('.circle:first').remove();
+function startRemoveRandom() {
+    setTimeout(() => {
+        circle.forEach((element) => {
+            if (element.length > 3) {
+                $('.circle:first').remove();
+            }
+        });
+        if (removeSpeed > 300) {
+            removeSpeed -= 10;
         }
-    });
-}, 1000);
+        startRemoveRandom();
+    }, removeSpeed);
+}
+
+startRemoveRandom();
 
 
 $(function () {
-    $('.container').on('click', '.circle',function(){
+    $('.container').on('mouseover', '.circle',function(){
+        
+        let parentValue = $(this);
+
+        $(window).bind('keydown',function (e) {
+            var originator = e.keyCode || e.which;
+            if (originator == '90' || originator == '88') {
+                parentValue.animate({
+                    'width': '90px',
+                    'height': '90px'
+                },100, function () {
+                    parentValue.remove();
+                });
+                score+=10;
+                time+=10;
+                $('.time').val(time);
+                $('.score').html(score);
+            }
+        })
+    }).on('mouseout',function () {
+        $(window).unbind('keydown');
+    }).on('click', '.circle', function () {
         $(this).animate({
             'width': '90px',
             'height': '90px'
@@ -53,7 +97,6 @@ $(function () {
         time+=10;
         $('.time').val(time);
         $('.score').html(score);
-        clickSound.play();
     });
 });
 
