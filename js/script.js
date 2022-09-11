@@ -4,7 +4,7 @@ let circle;
 let timeSpeed = 900;
 let circleSpeed = 900;
 let removeSpeed = 900;
-var clickSound = new Audio('../sound/hit-sound.mp3');
+let hitSound = document.querySelector('.hitSound');
 let randomNumber = (max) =>{
     return Math.floor(Math.random()* max)
 }
@@ -72,6 +72,7 @@ $(function () {
         },100, function () {
             $(this).remove();
         });
+        hitSound.play();
         score+=10;
         time+=10;
         $('.time').val(time);
