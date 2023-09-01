@@ -4,6 +4,8 @@ let circle;
 let timeSpeed = 900;
 let circleSpeed = 900;
 let removeSpeed = 900;
+
+/**@type {HTMLAudioElement} */
 let hitSound = document.querySelector('.hitSound');
 let randomNumber = (max) => {
     return Math.floor(Math.random() * max)
